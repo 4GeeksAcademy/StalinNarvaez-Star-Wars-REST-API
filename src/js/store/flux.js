@@ -1,3 +1,4 @@
+const apiUrl="https://swapi.dev/api/"
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -12,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			people: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,7 +39,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			apiGet: (endpoint)=>{
+				fetch(apiUrl+endpoint)	
+					.then(response=>response.json())
+					.then(data=>setStore({people: data.results}))			
+			},
 		}
 	};
 };
