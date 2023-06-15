@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       people: [],
       starships: [],
 	    planets: [],
+      favorite: []
     },
     actions: {
       apiGet: (endpoint) => {
@@ -33,6 +34,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			.then(response => response.json())
 			.then(data => setStore({ planets: data.results }));
       },
+
+    añadirFavoritos: (item) => {
+      const store = getStore();
+      const existeElemento = store.favorite.includes(item);
+      if (!existeElemento) {
+        setStore({
+          favorite: [...store.favorite, item]
+        });
+      };
+    },
+    
+    borrarFavoritos: (borrarItem) => {
+        const store = getStore();
+        const newFavorite = store.favorite.filter((item) => item !== borrarItem)
+        setStore({
+          favorite: newFavorite
+        })
+     },
     }
   };
 };
